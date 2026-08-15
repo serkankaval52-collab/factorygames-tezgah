@@ -26,7 +26,8 @@ GDD konseptle değil kanıtla açılır. Bu koşuda B8 simülasyon tablosu **hen
 | ne ölçüldü | sonuç | tasarıma etkisi |
 |---|---|---|
 | Palet G6 sinyal ayrımı (ΔE00, 4 görüş) | 56,51 / 48,47 / 62,26 / 48,72 ≥ 2,0 | `tehlike`↔`vurgu` renk ayrımı güvenli; biçim eşliği yine de zorunlu tutuldu |
-| Palet G6 oran ayağı, `tehlike`/`arka_plan` | döteranopide **2,88 < 3,0 — KIRMIZI** | **kilitli karar geri alınamadı:** paket onaylı, sapma yetkim yok → mimar kararı bekliyor (§Açık kapılar) |
+| Palet G6 oran ayağı, `tehlike`/`arka_plan` | ölçüm kırmızı verdi (2,88 < 3,0), **eşik değişmedi — renk değişti** | **kilitli karar geri alındı:** `tehlike` `#B4341F` → `#A82E1A` (mimar kararı v1.4.10). Yeni ölçüm 5,39 / 4,03 / **3,29** / 5,71; biçim eşliği oranın yerine geçmez, üstüne çıkar |
+| Türev tonlar (paket Bölüm 3 çarpanları), `tehlike`/`arka_plan` | ×0,86 → 4,26 · ×0,72 → 5,58 · ×0,60 → 7,07 (en dar değerler) | türevler koyulaştıkça pay artıyor; G6 tavanı **ana rolde** (3,29), türevlerde değil |
 | Kanonik preset sapması (Unity açılışı öncesi/sonrası) | 39/39 dosya birebir, iki ölçümde de yeşil | pinli sürümde ilk açılış yükseltmesi **olmuyor**; iskelet bu preset üstünde büyür |
 | Sahne baseline | `SampleScene.unity` 2 nesne ≤ 2 | sahne şablon varsayılanında kalıyor; hiyerarşi kodda kuruluyor (kural 7/8) |
 
@@ -280,8 +281,8 @@ yükseltmesine gider; sayaç bu koşuyla **1**'den başlar (kabul edilenler: T8,
 
 1. **B8 / `denge_sim.py` teslim edilmedi** → B3'ün 11 hücresi SIM-BEKLIYOR. Aşama 2
    kapanış kapısı (TBD=0) bu yüzden **beklemede**. Boşluğu executor doldurmaz (mimar kararı).
-2. **G6 döteranopi oranı kırmızı:** `tehlike`(`#B4341F`) / `arka_plan`(`#E8E4DA`) = **2,88 < 3,0**.
-   Palet onaylı sanat paketinden birebir alıntıdır; sapma yetkisi executor'da değildir.
-   Ölçülmüş minimal düzeltme adayları mimara sunulmuştur (en küçük: `#A82E1A` → 3,29).
+2. ~~G6 döteranopi oranı kırmızı~~ — **KAPANDI (v1.4.10).** `tehlike` `#B4341F` → `#A82E1A`;
+   eşik değişmedi, renk koyulaştırıldı. Döteranopi 2,88 → **3,29**. Biçim eşliği (üçgen)
+   oranın yerine geçmez, üstüne çıkar. Kanon: `duz-geometrik.md` v1.4.10.
 3. **Ek C `uygulama_boyut_tavan_mb` yok** → BOYUT kapısı RAPOR modunda: ölçer, kaydeder,
    **kırmaz** (kural 28: Ek C'de olmayan sayı kapıda kullanılamaz).

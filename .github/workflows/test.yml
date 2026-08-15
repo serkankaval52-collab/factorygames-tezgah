@@ -1,0 +1,31 @@
+name: test
+
+# Saf C# testleri — Unity API'sine dokunmayan cekirdek mantik (kod-standardi §1).
+# Unity'nin EditMode/PlayMode takimlari YERELDE kosar (C+ ilkesi); burada kosan sey
+# ayni kaynak dosyalarin Unity'siz derlenmis halidir, denge_sim dahil.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Cekirdek testleri
+        run: dotnet test tests/Core.Tests/Core.Tests.csproj -c Release --logger "trx;LogFileName=test-results.trx"
+
+      - name: Test sonuclari (artefakt)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: "**/TestResults/*.trx"
+          if-no-files-found: warn

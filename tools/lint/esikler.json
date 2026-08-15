@@ -1,0 +1,43 @@
+{
+  "_kaynak": "FactoryGames docs/appendix/C.md Bolum-1 (Sozlesme-8). Bu dosya Ek C'nin TAMAMI DEGIL, lint'in TUKETTIGI ALT KUMESIDIR. Ek C'de OLMAYAN sayi hicbir kapida kullanilamaz; kullanicinin 0A-6 form donusu Ek C'yi guncelledikce bu dosya da guncellenir.",
+  "_etiketler": {
+    "kalibrasyon_adayi": ["gorsel_siluet_fark_orani", "premium_ses_esik_ms", "premium_soguk_acilis_sn"],
+    "simdilik_tahmin": ["gorsel_sinyal_deltae_min"],
+    "aciklama": "kalibrasyon adaylari ilk 3 kosuda olculur; o gune dek VARSAYILAN UYGULANIR, atlanmaz (ilk-kosu.md). 'simdilik_tahmin' etiketi kullanici Ek C'ye degeri yazinca DUSER (L8 disiplini)."
+  },
+
+  "gorsel_palet_disi_piksel_yuzde": 5,
+  "gorsel_palet_kademe": 5,
+  "gorsel_alpha_sacak_yuzde": 2,
+  "gorsel_atlas_doluluk_yuzde": 70,
+  "gorsel_siluet_fark_orani": 25,
+  "gorsel_siluet_doluluk_band": [15, 70],
+  "gorsel_siluet_ceper_min": 0.15,
+  "gorsel_kontrast_ana_ozne": 3.0,
+  "gorsel_kontrast_ui_metin": 4.5,
+  "gorsel_sinyal_deltae_min": 2.0,
+  "gorsel_anim_kare_band": [4, 12],
+  "gorsel_anim_dongu_ortusme": 90,
+
+  "ses_lufs_band": [-17, -15],
+  "ses_tepe_dbtp": -1,
+  "ses_sfx_sure_tavan_sn": 2,
+
+  "premium_gecis_sure_band": [150, 400],
+  "premium_kare_hizi_secenek": [30, 60],
+  "premium_kare_tutarlilik_payi": 1,
+  "premium_tepki_kare_tavan": 3,
+  "premium_ses_esik_ms": 100,
+  "premium_soguk_acilis_sn": 3,
+
+  "reklam_siklik_tavan": 3,
+  "reklam_arasi_min_sn": 90,
+  "reklam_ilk_gun_sifir_turler": ["bulmaca", "mantik"],
+
+  "ilk_surum_diller": ["en", "tr"],
+
+  "ekran_enboy_min": 1.78,
+  "ekran_enboy_max": 2.33,
+  "ekran_matris_min_hucre": 3,
+  "dokunma_hedef_min_mm": 9
+}

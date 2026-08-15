@@ -1,0 +1,17 @@
+{
+  "_kaynak": "FactoryGames docs/standards/sanat-yonu/duz-geometrik.md Bolum 1 (NET-SOKAK). Paket ONAYLI kaynaktir (v1.4.9); hex'ler BIREBIR alintidir, burada yeniden karar verilmez. Oyun boyunca degismez (Asama 2 kapisi, gorsel-sozlesme G1).",
+  "_ek_rol_notu": "ui_zemin paket Bolum 1'de ayri satir DEGILDIR: kart zemini arka_plan ile ayni tondur (#E8E4DA) ve paketin G6 olcumleri bu eslesmeyle kosuldu. G1 zorunlu rol listesi ui_zemin istedigi icin burada acik satir olarak yazilir — sapma degil, ayni degerin adlandirilmasidir.",
+  "_aile": "duz-geometrik",
+  "_yon": "NET-SOKAK",
+  "roller": {
+    "arka_plan": "#E8E4DA",
+    "ana_ozne": "#1F4E66",
+    "vurgu": "#0F7A5A",
+    "tehlike": "#B4341F",
+    "ui_metin": "#16202A",
+    "ui_zemin": "#E8E4DA",
+    "yol": "#CFC8BA",
+    "govde": "#5B7285",
+    "stok": "#D9A521"
+  }
+}

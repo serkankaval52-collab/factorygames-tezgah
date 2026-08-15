@@ -1,0 +1,82 @@
+# Unity uretilen dizinler (yeniden uretilebilir — depoya girmez)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Uu]serSettings/
+.vs/
+.vscode/
+*.sln
+*.user
+*.pidb
+*.booproj
+*.svd
+*.unityproj
+
+# Unity'nin KOKTE urettigi IDE projeleri (yeniden uretilir).
+# DIKKAT (0A adim 4 bulgusu): duz `*.csproj` deseni tests/Core.Tests/Core.Tests.csproj
+# dosyasini da yutuyordu ve CI'daki `dotnet test` onu bulamayacakti — desen kok ile
+# sinirlandi, test projesi acikca korunuyor.
+/*.csproj
+!tests/**/*.csproj
+
+# Android build gecici agaci — MAKINE YOLU icerir (PII), depoya girmez
+.utmp/
+
+# .NET test ciktilari
+bin/
+[Tt]est[Rr]esults/
+
+# Uygulama paketleri ve semboller (artefakt — cihazda/CI'da kalir)
+*.apk
+*.aab
+*.ipa
+*.app
+*.unitypackage
+*.dSYM*
+
+# Kanit/dokuman duzlemine ham artefakt girmez (Sozlesme-4).
+# DIKKAT: Assets/ altindaki oyun varliklari (sprite, ses) BU KURALIN DISINDADIR —
+# onlar G1-G2/S1 kapilarina tabidir, gitignore ile gizlenmez.
+/*.png
+/*.jpg
+/*.jpeg
+/*.gif
+/*.mp4
+/*.mov
+docs/**/*.png
+docs/**/*.jpg
+docs/**/*.mp4
+
+# Yerel calisma kopyalari
+halka/
+.markers/
+runlog/
+
+# Python uretilen (kendi HAM-ARTEFAKT disiplinimizin geregi — 0A denetim bulgusu)
+__pycache__/
+*.pyc
+
+# PII / sir desenleri (0B eklemesi — imza zinciri bu repoda kurulacak, Asama 8).
+# Kural 25: repoya sir girmez. Bu satirlar SECRET-SCAN'in yedegidir, yerine gecmez.
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.mobileprovision
+*.cer
+*.certSigningRequest
+*.p8
+AuthKey_*.p8
+*.ulf
+*.alf
+Unity_lic.ulf
+keystore.properties
+google-services.json
+GoogleService-Info.plist
+*.env
+.env.*
+secrets.*

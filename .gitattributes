@@ -1,0 +1,40 @@
+# Satir sonu disiplini — 0A adim 4 saha bulgusu.
+#
+# Sorun: Windows calisma kopyasi CRLF, Linux CI checkout'u LF uretiyordu; preset
+# sapma kapisi ayni dosyalari "degismis" sanip 7 yanlis pozitif verdi. Lint tarafi
+# normalize hash ile korundu, ama kaynagin kendisi de tek bicimde tutulur:
+# Unity metin varliklarinin tamami LF ile checkout edilir.
+
+* text=auto eol=lf
+
+# Unity YAML varliklari ve proje metinleri — her platformda LF
+*.unity        text eol=lf
+*.prefab       text eol=lf
+*.asset        text eol=lf
+*.meta         text eol=lf
+*.mat          text eol=lf
+*.anim         text eol=lf
+*.controller   text eol=lf
+*.scenetemplate text eol=lf
+*.inputactions text eol=lf
+*.asmdef       text eol=lf
+*.asmref       text eol=lf
+*.json         text eol=lf
+*.cs           text eol=lf
+*.py           text eol=lf
+*.yml          text eol=lf
+*.md           text eol=lf
+*.csproj       text eol=lf
+*.txt          text eol=lf
+
+# Ikili varliklar — dokunulmaz
+*.png  binary
+*.jpg  binary
+*.wav  binary
+*.mp3  binary
+*.ogg  binary
+*.ttf  binary
+*.otf  binary
+*.fbx  binary
+*.apk  binary
+*.aab  binary

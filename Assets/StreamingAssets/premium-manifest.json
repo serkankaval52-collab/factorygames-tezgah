@@ -1,0 +1,23 @@
+{
+  "_kaynak": "Premium sozlesme P2/P4/P5/P7/P9a alanlari. Asama 2 plan kararlaridir; sayisal esikler Ek C'den gelir (kural 28) ve burada TEKRARLANMAZ.",
+  "_p2_notu": "Gorsel karsiliklar plan duzeyindedir; varlik uretimi Asama 4'te bu satirlara bagli kalir. Kritik geri bildirim yalniz sese baglanmaz (B6).",
+
+  "eylemler": [
+    { "ad": "rafa_yerlestir", "gorsel_karsilik": "kupun raf hucresine oturmasi + hucre cerçevesinin vurgu tonuna donmesi" },
+    { "ad": "one_cikar", "gorsel_karsilik": "secili urun kupunun bir kademe yukselmesi + tente altinda vurgu seridi" },
+    { "ad": "musteriyi_geri_cevir", "gorsel_karsilik": "musteri siluetinin yol seridine donmesi + tek kisa tehlike isareti" },
+    { "ad": "gunu_bitir", "gorsel_karsilik": "gun-sonu kartinin asagidan girmesi + stok sayacinin yeni degere sayilmasi" },
+    { "ad": "tabelayi_kullan", "gorsel_karsilik": "tabela direginin vurgu tonuna donmesi + musteri akisinin yogunlasmasi" }
+  ],
+
+  "durumlar": ["yukleme", "izin_isteme", "ag_hatasi", "bos_icerik", "hata"],
+
+  "sessiz_toparlanma_olayi": true,
+  "_p5_notu": "sessiz_toparlanma kod tarafinda FactoryGames.Core.AnalyticsEvents.SESSIZ_TOPARLANMA sabitinden gelir; oyun sozlugu ayni degeri tasir ve EditMode testi esitligi kilitler.",
+
+  "easing_seti": ["linear", "ease_out_quad", "ease_in_out_quad"],
+  "animasyonlar": [],
+  "_p7_notu": "animasyonlar[] Asama 4'te dolar; easing seti simdiden sinirlidir (tek hareket dili, P7).",
+
+  "ses_tamponu": "best_latency"
+}

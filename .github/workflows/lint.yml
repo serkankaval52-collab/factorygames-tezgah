@@ -1,0 +1,32 @@
+name: lint
+
+# C+ makine ilkesi: CI runner'inda Unity KOSMAZ (Personal plan runner'da
+# lisanslanamiyor — FactoryGames docs/factory/verification/06-lisans.md).
+# Bu is yalnizca dosya/manifest duzlemini olcer; Unity gerektiren kanitlar
+# yerelde uretilir ve metin olarak depoya girer.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Kod/dosya kapilari (sahne-baseline, tek-kaynak, preset-sapma, secret, ham-artefakt, dil)
+        run: python tools/lint/lint.py --kok .
+
+      - name: Varlik kapilari (G1-G8, S1, P2/P4/P5/P7/P9a)
+        run: python tools/lint/lint_varlik.py --kok .
+
+      # Asama 2 gecis kriterinin CI karsiligi: B4 olay haritasi <-> kod sabitleri.
+      # Yon kod -> doc; tek kaynak Assets/Scripts/Core/AnalyticsEvents.cs.
+      - name: events-parity (B4 <-> AnalyticsEvents)
+        run: python tools/events_parity.py --kok .

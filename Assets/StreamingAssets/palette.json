@@ -1,0 +1,18 @@
+{
+  "_kaynak": "FactoryGames docs/standards/sanat-yonu/duz-geometrik.md Bolum 1 (NET-SOKAK). Paket ONAYLI kaynaktir (v1.4.10); hex'ler BIREBIR alintidir, burada yeniden karar verilmez. Oyun boyunca degismez (Asama 2 kapisi, gorsel-sozlesme G1).",
+  "_tehlike_notu": "tehlike #B4341F -> #A82E1A (mimar karari v1.4.10). Gerekce: G6 oran ayagi doteranopide 2,88 < 3,0 veriyordu; esik DEGISMEDI, renk koyulastirildi. Yeni olcum: 5,39 / 4,03 / 3,29 / 5,71 (normal/prot/dote/trit), sinyal cifti dE00 en dar 46,61.",
+  "_ek_rol_notu": "ui_zemin paket Bolum 1'de ayri satir DEGILDIR: kart zemini arka_plan ile ayni tondur (#E8E4DA) ve paketin G6 olcumleri bu eslesmeyle kosuldu. G1 zorunlu rol listesi ui_zemin istedigi icin burada acik satir olarak yazilir — sapma degil, ayni degerin adlandirilmasidir.",
+  "_aile": "duz-geometrik",
+  "_yon": "NET-SOKAK",
+  "roller": {
+    "arka_plan": "#E8E4DA",
+    "ana_ozne": "#1F4E66",
+    "vurgu": "#0F7A5A",
+    "tehlike": "#A82E1A",
+    "ui_metin": "#16202A",
+    "ui_zemin": "#E8E4DA",
+    "yol": "#CFC8BA",
+    "govde": "#5B7285",
+    "stok": "#D9A521"
+  }
+}

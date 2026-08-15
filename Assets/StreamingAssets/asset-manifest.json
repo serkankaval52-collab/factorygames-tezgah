@@ -1,0 +1,11 @@
+{
+  "_kaynak": "stil ucslusu: FactoryGames docs/standards/sanat-yonu/duz-geometrik.md (NET-SOKAK, v1.4.9) — BIREBIR alinti, burada karar verilmez.",
+  "_varlik_notu": "varliklar[] Asama 2'de BOSTUR: bu asama plan asamasidir, varlik uretimi Asama 4'tedir. Bos liste G2/G7/G8 ve S1 kapilarinda VERI-YOK uretir; 'gecti' SAYILMAZ (ilk-kosu.md §1) ve bu bilincli bir durumdur, atlanmis kapi degildir.",
+  "stil": {
+    "perspektif": "izometrik 2:1",
+    "cizgi_kalinligi_bandi": "0 px (konturusuz)",
+    "golge_yonu": "sag-ust"
+  },
+  "_golge_basamak_notu": "Basamak detayi (ust 1,00 / sag yan 0,86 / sol on 0,72 / ince detay 0,60) paket Bolum 3'te kalir; G5 ucslusu yon bilgisini tasir, basamak tablosunu degil.",
+  "varliklar": []
+}

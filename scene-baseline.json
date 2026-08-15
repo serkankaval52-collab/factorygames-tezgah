@@ -1,0 +1,10 @@
+{
+  "pin": "6000.3.16f1",
+  "dosya": "Assets/Scenes/SampleScene.unity",
+  "sha256": "387d8216a517be775b6ecc2ab55b97ece687c3372322da2ba027a96908014912",
+  "nesne_sayisi": 2,
+  "kaynak": "presets/unity-6000.3.16f1/Assets/Scenes/SampleScene.unity (com.unity.template.2d-cross-platform-2d-6.1.2)",
+  "nesneler": ["Main Camera", "Global Light 2D"],
+  "olcum": "-createProject + preset kopyasi + paket cozumlemesi (batchmode exit 0) SONRASI, oyun kodundan ONCE",
+  "olcum_utc": "2026-08-15"
+}

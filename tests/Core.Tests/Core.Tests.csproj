@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Saf C# test projesi: oyunun Core/ kaynaklarini Unity OLMADAN derler ve kosar.
+    Gerekce (kod-standardi §1): hesap/kural Unity API'sine dokunmaz — dokunmadigi
+    icin CI'da Unity'siz sinanabilir. C+ ilkesi bunu zorunlu kilar: runner'da Unity
+    yoktur, cekirdek mantik kaniti buradan gelir.
+
+    Unity'nin EditMode/PlayMode takimlari YERELDE kosar; ikisi ayni kaynagi surer.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Game.Core.Tests</RootNamespace>
+    <!-- Kultur bagimsizligi: sonda §7.5 bulgusunun (tr-TR ondalik ayiraci) onlemi -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Oyunun saf cekirdegi (Unity API'si YOK). Dizin bosken derleme yine gecer. -->
+    <Compile Include="../../Assets/Scripts/Core/**/*.cs" />
+  </ItemGroup>
+
+</Project>

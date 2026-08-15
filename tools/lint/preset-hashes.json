@@ -1,0 +1,60 @@
+{
+  "_aciklama": "Preset sapma kapisinin referansi. MEKANIK uretildi (elle yazilmaz). Hash'ler SATIR SONU NORMALIZE edilmis sha256'dir (CRLF/CR -> LF): platformlar arasi ayni deger uretir; 0A adim 4'te CRLF/LF farki 7 yanlis pozitif uretmisti.",
+  "_uretim": "0B Asama 2, 2026-08-16, Unity 6000.3.16f1 — PLATFORM-SONRASI ILK DURUM. Referans ani: scaffold + kanonik preset + Android platform ayarlari (uygulama kimligi, IL2CPP, ARM64) + headless ilk acilis SONRASI. Onceki referans 'scaffold ani' idi; platform ayarlari zorunlu olarak sapma uretiyordu. Baseline TASINDI, kapsam DARALTILMADI: dosya listesi aynen korundu, yalniz hash'ler tazelendi. Bundan sonraki her sapma bu 5 dosyada da yine KIRMIZI verir.",
+  "dosyalar": {
+    "Assets/DefaultVolumeProfile.asset": "4789b43834dd5efb32eec4c3b436baf0895c9f8cf2a0624121da8dd812ee984a",
+    "Assets/DefaultVolumeProfile.asset.meta": "037700fc76ee8e15bf57a6608bf0229b50b9ba78a1095a943fe0add01a6bf5c5",
+    "Assets/Scenes.meta": "a80a7b316e7d7ce80c8a01ecb374702a04e91228a0729629c894c70250baea5d",
+    "Assets/Settings.meta": "0b5ba35daae66cbfcfa17bf61091aeab7f3bed07681f8db7bed3fb72d178c2d4",
+    "Assets/Settings/Lit2DSceneTemplate.scenetemplate": "ca928761bf976c878d54df524a3742c5f1bca53a013b4061abd2c752c8a212aa",
+    "Assets/Settings/Lit2DSceneTemplate.scenetemplate.meta": "d4cc0f73332c3228945aa64f9c5019f1c1950d77703728c5e9674a0367c5e4d1",
+    "Assets/Settings/Renderer2D.asset": "900455794d0d788504847c3aa54e03a0374fd3635afa295ed05c2f646f974705",
+    "Assets/Settings/Renderer2D.asset.meta": "9689252004910cfad653e8a8d09b8c96befb560e1fb583033630db0f5bb76420",
+    "Assets/Settings/Scenes.meta": "705b24f629af6836450c9fd2085f781fe11d8633bcaa0c7b3197058b93a766e5",
+    "Assets/Settings/Scenes/URP2DSceneTemplate.unity": "f6fb3e91aaa90417e2920b7f903066833b3b9aea72ddcb5e46b91afa729c2e90",
+    "Assets/Settings/Scenes/URP2DSceneTemplate.unity.meta": "e7391ff924b7defdf30e0b0b235f8113618481c93f567e0c699c8895a9534579",
+    "Assets/Settings/UniversalRP.asset": "167d20e3285f9071dc9bcb0a4fee7cdf8bb335dd849ec96e4b3fa39bd401f266",
+    "Assets/Settings/UniversalRP.asset.meta": "8b7653265c1a9a054461264fc7b03bdbafc030149949fce5bf9e85924fb565a5",
+    "Assets/StreamingAssets.meta": "eb5329fd4cc88103ad74f83ac7df8ad1bae2ef0efc5f4218aca1145c27073795",
+    "Assets/UniversalRenderPipelineGlobalSettings.asset": "d902d85e75efcf1b363a93533eaf52c783d42236c76eb96d779c175416f30548",
+    "Assets/UniversalRenderPipelineGlobalSettings.asset.meta": "746a38b93f8f49b644ff6893456cf24db401e5c342aaae3864e91560d37c5422",
+    "ProjectSettings/AudioManager.asset": "aeedeb3243f07b61dbbe854aa08b5ef6f0b5274dd9852ad9f6129dde3e105a31",
+    "ProjectSettings/ClusterInputManager.asset": "40e65dd214bf254955d2c8829ca8ce2130fd3510485560ce012e9a1ddd93e623",
+    "ProjectSettings/DynamicsManager.asset": "b7c9a9dc08b98990109d4346f68745e15e238de400f96c583e53e1c83c743a78",
+    "ProjectSettings/EditorBuildSettings.asset": "58bcbfb23da7aab5acd696e7d83e9d75a86442ed39a582159d2493049361ba28",
+    "ProjectSettings/EditorSettings.asset": "c2937e833d94a8827d47439239d703eb3fbf8ed9daab7c018904e974837b2489",
+    "ProjectSettings/GraphicsSettings.asset": "bcdb6ee570b5edc137b79e48f860495035136e494030e214fe39c151d16fe993",
+    "ProjectSettings/InputManager.asset": "7a1bb836a1008d26d0860d143e9d9df7ca41731d30a72901b518063819c62df2",
+    "ProjectSettings/MemorySettings.asset": "1e8379a461b10ae09f3f696911088c16875d63e87ed5f2d95df9e1892703f9fd",
+    "ProjectSettings/MultiplayerManager.asset": "aba89fd1a1ddad182727ad82727e536d27372e90328a8196da2a4560398983dd",
+    "ProjectSettings/NavMeshAreas.asset": "80106cfa7e6181a1928b142c075f3e510d527441e3d79bc83590e4ac91e7cd66",
+    "ProjectSettings/NetworkManager.asset": "46395def99a6b5ae38ebb19b3e18f75215a9d4172c219361521a5a51e051f386",
+    "ProjectSettings/Physics2DSettings.asset": "50e61d70bc38c632cb0e6efe364a9c5bcfd9a8dbcf4e7b5ecfb06a2030c4518f",
+    "ProjectSettings/PresetManager.asset": "29c125923fe6e29f90190d4fce1c82d660e7051546e2c9d02908d18c9cf2436c",
+    "ProjectSettings/ProjectSettings.asset": "fbadc4d64190d8100695a81a0392d505c2cd592cc8088c476ed90d170604cb4f",
+    "ProjectSettings/QualitySettings.asset": "e7dc185b977703ec43789f2e73cf2f44f31a73bb42bd594f69d5a799d65b2883",
+    "ProjectSettings/ShaderGraphSettings.asset": "5c432c9c73fdf73fee91c8823ea02ab98e3b7a8edf341b5ae6901d699cce52a7",
+    "ProjectSettings/TagManager.asset": "8e18b1c820e9c09e16bbd1f1b7842e9fb3b0158a0921b0964e0b8fa12c6e2c01",
+    "ProjectSettings/TimeManager.asset": "1a83e54adbbda7c9f4851103a0c6ab7f6448a3343d4ea5b7620452fa08416ecd",
+    "ProjectSettings/URPProjectSettings.asset": "a3a626cb529ccfc0a82e388b8cd32bc60888f7226c33412fad3bc50aba802cd7",
+    "ProjectSettings/UnityConnectSettings.asset": "11251dae0356b6f43dd2c67bb511f6b7ecda4e5de425186bba3297e6f3dc1c6f",
+    "ProjectSettings/VFXManager.asset": "f066c6483919961332415ee64204f74fe52f38c02e82892eb02b7a5b2e381f0e",
+    "ProjectSettings/VersionControlSettings.asset": "e199cdfa6a8f2bf33cfd47e549198f13e3eb2a5099e908fdb4e0f14d939ccc6b",
+    "ProjectSettings/XRSettings.asset": "edd2beb4a2e388312b4b7da241aa51070434005d82c59363f1237dd2e567585f"
+  },
+  "_mesru_alanlar": {
+    "ProjectSettings/ProjectSettings.asset": [
+      "applicationIdentifier.Android = com.factorygames.tezgah",
+      "overrideDefaultApplicationIdentifier = 1",
+      "AndroidTargetArchitectures = 2 (ARM64)",
+      "scriptingBackend.Android = IL2CPP",
+      "m_BuildTargetBatching (platform girisi)"
+    ],
+    "_sema_tamamlama": [
+      "Assets/DefaultVolumeProfile.asset — Unity: 'modified to ensure all overrides are present'",
+      "Assets/Settings/UniversalRP.asset — k_AssetVersion 13'e yukseldi",
+      "Assets/UniversalRenderPipelineGlobalSettings.asset — rid listesi dolduruldu",
+      "ProjectSettings/UnityConnectSettings.asset — dashboard/Insights alanlari eklendi"
+    ]
+  }
+}

@@ -1,0 +1,61 @@
+name: ios
+
+# C+ duzenegi: Unity macOS runner'inda KOSMAZ. Xcode projesi YERELDE uretilir
+# (Windows'ta; kanit: FactoryGames docs/factory/verification/02-ios-uretim.md),
+# zip'lenip GECICI bir Release asset'i olarak yuklenir — git tarihine girmez
+# (kural 25 temiz kalir). Bu is o asset'i indirip yalnizca DERLEME kanitini uretir.
+#
+# Imza zinciri ve ASC anahtari bu isin KAPSAMI DISINDADIR (0B'de kurulur):
+# CODE_SIGNING_ALLOWED=NO ile derlenir; amac "kod derleniyor mu" sorusudur.
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "xcodeproj zip'ini tasiyan gecici release etiketi"
+        required: true
+      asset_name:
+        description: "asset dosya adi"
+        required: false
+        default: "xcodeproj.zip"
+
+permissions:
+  contents: read
+
+jobs:
+  xcodebuild:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode projesini indir (gecici release asset)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download "${{ inputs.release_tag }}" \
+             --pattern "${{ inputs.asset_name }}" --dir "$RUNNER_TEMP"
+          mkdir -p "$RUNNER_TEMP/xcode"
+          unzip -q "$RUNNER_TEMP/${{ inputs.asset_name }}" -d "$RUNNER_TEMP/xcode"
+
+      - name: Proje agacini dogrula
+        run: |
+          PROJ=$(find "$RUNNER_TEMP/xcode" -name "*.xcodeproj" -maxdepth 3 | head -n 1)
+          if [ -z "$PROJ" ]; then
+            echo "KIRMIZI: asset icinde *.xcodeproj yok — kanit uretilemez"; exit 1
+          fi
+          echo "PROJ=$PROJ" >> "$GITHUB_ENV"
+          echo "bulundu: $PROJ"
+
+      - name: Derleme kaniti (imzasiz)
+        run: |
+          xcodebuild -project "$PROJ" \
+                     -scheme Unity-iPhone \
+                     -configuration Release \
+                     -sdk iphoneos \
+                     -derivedDataPath "$RUNNER_TEMP/dd" \
+                     CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+                     build | tail -n 40
+
+      - name: Ozet
+        if: always()
+        run: echo "iOS derleme kaniti tamamlandi — imza zinciri 0B'de kurulacak."

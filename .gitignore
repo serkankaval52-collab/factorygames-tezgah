@@ -60,6 +60,12 @@ runlog/
 __pycache__/
 *.pyc
 
+# Unity Test Framework'un PlayMode kosusunda urettigi gecici kayitlar.
+# 0B bulgusu: ilk commit'e sizdilar, sonraki kosu silince PRESET/agac gurultusu
+# oldular. Uretilen dosyadir, kaynak degil (Sozlesme-4).
+Assets/Resources/PerformanceTestRunInfo.json*
+Assets/Resources/PerformanceTestRunSettings.json*
+
 # PII / sir desenleri (0B eklemesi — imza zinciri bu repoda kurulacak, Asama 8).
 # Kural 25: repoya sir girmez. Bu satirlar SECRET-SCAN'in yedegidir, yerine gecmez.
 *.keystore

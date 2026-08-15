@@ -169,6 +169,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.factorygames.tezgah
     Standalone: com.DefaultCompany.2D-URP
+    iPhone: com.factorygames.tezgah
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -489,6 +490,9 @@ PlayerSettings:
       m_SubKind: 
   m_BuildTargetBatching:
   - m_BuildTarget: Standalone
+    m_StaticBatching: 1
+    m_DynamicBatching: 0
+  - m_BuildTarget: Android
     m_StaticBatching: 1
     m_DynamicBatching: 0
   m_BuildTargetShaderSettings: []

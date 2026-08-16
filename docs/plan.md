@@ -19,9 +19,27 @@ G5 üçlüsü oradan **birebir alıntıdır**, burada yeniden karar verilmez.
 
 ## B0 — Kanıtla başlama
 
-GDD konseptle değil kanıtla açılır. Bu koşuda B8 simülasyon tablosu **henüz yok**
-(araç teslim edilmedi), dolayısıyla B0'ın kanıt tablosu da SIM-BEKLIYOR'dur. Yerine
-şu ana kadar **gerçekten ölçülmüş** olanlar açılışa konur — beyan değil, artefakt:
+GDD konseptle değil kanıtla açılır: ilk bölüm **B8'in simülasyon çıktı tablosudur**
+ve B3'ün sayıları buradan alıntılanır.
+
+**Simülasyon:** `denge_sim v1.4.12`, model `tezgah-v1`, `tohum=42`, `seeds=200`.
+Rapor: [`docs/verification/02-denge-sim.json`](verification/02-denge-sim.json).
+
+| ne ölçüldü | sonuç (orta · p10 / p50 / p90) | tasarıma etkisi / hangi kilitli karar |
+|---|---|---|
+| Gün başarısızlık oranı | **0,5004** · 0,3636 / 0,50 / 0,60 | hedef bandın (%35–60) tam ortası; tahsis kararı her gün ısırıyor — **B3'ün merkez sayısı buradan geldi** |
+| Oturum süresi | **492,0 sn** (8,2 dk) · 450 / 500 / 500 | hedef 6–10 dk bandında; `sezon_gun_sayisi` bu ölçümle 12'ye sabitlendi |
+| Oynanan gün | **9,84** · 9 / 10 / 10 | agresif oyuncu sezonu ~10. günde tüketiyor |
+| Tamamlanma oranı | **0,000** · 0 / 0 / 0 | **kilitli kararı doğruladı:** simülasyondaki "hep sat" oyuncusu sezonu ASLA bitiremiyor. Sezonu bitirmek (kart A: "kalan stokla bitirmek skor getirir") ancak **tahsis yaparak** mümkün — yani oyunun vaadi matematiksel olarak gerçek |
+| Toplam satış | **150,0** · 150 / 150 / 150 | stok her koşuda tamamen tükeniyor; "kaynak azalır, yenilenmez" ekseni sayıyla doğrulandı |
+| Tohum kararlılığı | tohum 7: başarısızlık 0,5088 · oturum 491,5 sn | **yön değişmedi** — iki tohumda da her iki hedef bandın içinde (fark 0,0084 ve −0,5 sn) |
+| Determinizm | aynı config + aynı tohum → aynı JSON (sha256 eşit) | rapor yeniden üretilebilir; beyan değil artefakt |
+
+**Sabitle oynamaya kalkan uygulayıcı ilk okuduğu şeyde neden değiştiremeyeceğini görür:**
+palet kilitli (sanat paketi), preset kilitli (kanonik hash), **sayılar sim'e bağlı** —
+sabit değişirse `denge_sim` yeniden koşar (B8 değişim kontrolü).
+
+### Ayrıca ölçülmüş olanlar (görsel/iskelet düzlemi)
 
 | ne ölçüldü | sonuç | tasarıma etkisi |
 |---|---|---|
@@ -84,24 +102,34 @@ dizginlemeler" satırından alıntı).
 
 ## B3 — Matematik modeli
 
-Her hücre SIM-BEKLIYOR desenindedir; sayılar `tools/denge_sim.py` çıktısıyla dolacak.
+**TBD yok, SIM-BEKLIYOR yok.** Her sayı ya simülasyon çıktısıdır ya gerekçeli
+"simüle edilemez" satırıdır (B8 kaynak denetimi). Sim kaynağının kısaltması:
 
-| büyüklük | değer |
-|---|---|
-| Tur (gün) süresi | **30 sn** — kart A'nın sabiti, sim'e tabi değil (kura ekseni) |
-| Sezon uzunluğu (gün) | `SIM-BEKLIYOR \| gerekçe: 30 sn × gün sayısı tek oturumda bitmeli; hedef oturum 6–10 dk \| beklenen aralık: 12–20 gün` |
-| Başlangıç sezon stoğu (adet) | `SIM-BEKLIYOR \| gerekçe: stok gün sayısından önce bitmeli ki kısıt ısırsın, ama 3. günden önce bitmemeli \| beklenen aralık: 90–160 adet` |
-| Gün başına taban talep | `SIM-BEKLIYOR \| gerekçe: erken günde raf kapasitesinin altında, geç günde üstünde olmalı \| beklenen aralık: 5–14 müşteri` |
-| Talep artış eğrisi | `SIM-BEKLIYOR \| gerekçe: baskı gün ilerledikçe artmalı; doğrusal mı üstel mi sim seçecek \| beklenen aralık: gün başına %6–%14 artış` |
-| Raf kapasitesi (başlangıç / tavan) | `SIM-BEKLIYOR \| gerekçe: ilk gün tek raf (FTUE), tavan tahsis kararını anlamlı tutmalı \| beklenen aralık: 1 / 4–6 raf` |
-| Hedef başarısızlık oranı (gün bazında geri çevrilen ≥1) | `SIM-BEKLIYOR \| gerekçe: her gün biraz kayıp olmalı ki tahsis karar olsun; kayıpsız gün oyunu boşaltır \| beklenen aralık: günlerin %35–%60'ı` |
-| Hedef oturum uzunluğu | `SIM-BEKLIYOR \| gerekçe: "bir tur daha" kitlesi; tek sezon tek oturumda bitmeli \| beklenen aralık: 6–10 dk` |
-| Oturum/gün hedefi | `SIM-BEKLIYOR \| gerekçe: sezon tekrar oynanabilir, günlük zorunluluk yok \| beklenen aralık: 1,5–3 oturum` |
-| Ekonomi: stok giriş–çıkış | Giriş **tek seferlik** (sezon başı), giriş yok. Çıkış = karşılanan müşteri. Bu **kilitli tasarım kararıdır**, sim değiştiremez — kart A'nın kısıt ruhu. |
-| Tabela çarpanı (K3 ödülü) | `SIM-BEKLIYOR \| gerekçe: bir turluk talep artışı hissedilmeli ama stok tükenişini hızlandırıp cezaya dönmemeli \| beklenen aralık: ×1,3–×1,8` |
-| Doğal reklam anı yoğunluğu | `SIM-BEKLIYOR \| gerekçe: yalnız gün-sonu kartında teklif var; oturum başına doğal an sayısı sezon uzunluğuna bağlı \| beklenen aralık: oturum başına 2–4 an` (Ek C `reklam_siklik_tavan`=3 tavanını aşamaz) |
+> **[SIM]** = `denge_sim v1.4.12`, `docs/verification/02-denge-sim.json`, `tohum=42`, `seeds=200`
 
-**Simüle edilemez satırı yok** — her hücrenin ölçüm yolu var; hiçbiri gerekçesiz tahmin değil.
+Sim **girdisi** olan altı değer `Assets/StreamingAssets/config.json`'da kök seviyede
+yaşar — sim ile oyun **aynı dosyayı** okur, ikinci bir kopya yoktur.
+
+| # | büyüklük | değer | kaynak |
+|---|---|---|---|
+| 1 | Tur (gün) süresi | **30 sn** | kart A kura ekseni — **sabit**, sim'e tabi değil (`kura.json`) |
+| 2 | Sezon uzunluğu | **12 gün** | **[SIM]** girdi · oturum 492 sn ile 6–10 dk bandına oturdu |
+| 3 | Başlangıç sezon stoğu | **150 adet** | **[SIM]** girdi · toplam satış 150,0 → stok her koşuda tükeniyor |
+| 4 | Gün başına taban talep | **10 müşteri** | **[SIM]** girdi |
+| 5 | Talep artış eğrisi | **gün başına %10** (üstel: `taban × 1,10^(g-1)`) | **[SIM]** girdi · model `tezgah-v1` üstel seçti |
+| 6 | Raf kapasitesi | **3 raf** (raf başı 6 adet/gün → günlük tavan 18) | **[SIM]** girdi · raf başı kapasite motor sabiti |
+| 7 | Tabela çarpanı (K3 ödülü) | **×1,5** | **[SIM]** girdi · beklenen ×1,3–×1,8 bandının ortası |
+| 8 | Gün başarısızlık oranı (geri çevrilen ≥1) | **%50,0** (p10 %36,4 · p50 %50 · p90 %60) | **[SIM]** çıktı · hedef %35–60 bandının ortası |
+| 9 | Oturum uzunluğu | **492 sn ≈ 8,2 dk** (p10 450 · p90 500) | **[SIM]** çıktı · hedef 6–10 dk |
+| 10 | Ekonomi: stok giriş–çıkış | Giriş **tek seferlik** (sezon başı), sonrasında giriş **yok**. Çıkış = karşılanan müşteri. | **kilitli tasarım kararı** — sim değiştiremez; kart A'nın kısıt ruhu. Sim bunu doğruladı: tamamlanma oranı 0,000 |
+| 11 | Oturum/gün hedefi | **1,5–3 oturum** | **simüle edilemez, gerekçe:** oyuncunun geri-dönüş davranışıdır; ekonomi motorunun konusu değil. **Kanıt yolu:** Aşama 8–9 telemetri ölçümü — `oturum_basladi` / `sezon_basladi` olayları B4 paritesinin zaten parçası |
+| 12 | Doğal reklam anı yoğunluğu | **oturum başına 2–4 an** | **ölçüm değil karar** (B5): tek yerleşim = gün-sonu kartı, `menu-sonu-tek-dugme` matrisi + `secim.md` K3. Ek C `reklam_siklik_tavan`=3 tavanını aşamaz |
+
+**Not (2 ↔ 9 çapraz tutarlılığı):** sezon 12 gün, ama sim'in "hep sat" oyuncusu
+ortalama **9,84** günde stoğu tüketiyor. İkisi çelişmez: 12 **üst sınırdır** ve
+tahsis yapan oyuncunun ulaşabileceği hedeftir; agresif oyuncu göremez. Sezon
+uzunluğunu 12'nin üstüne çıkarmak hedefi ulaşılamaz kılardı (tarama: 12–20 arası
+tüm değerler aynı metrikleri veriyor, çünkü sezon zaten dolmadan bitiyor).
 
 ## B4 — Analitik olay haritası
 
@@ -152,8 +180,11 @@ serin-nötr palet) bu beyanla tutarlıdır — çocuk-hedefli görsel dil yok.
 | Fon müziği (tek döngü) | OGG Vorbis | — |
 
 Seviye hedefleri Ek C'den: `ses_lufs_band` **[-17, -15] LUFS**, `ses_tepe_dbtp` **-1 dBTP**.
-Toplam ses MB tavanı: `SIM-BEKLIYOR | gerekçe: uygulama boyut tavanı Ek C'de henüz yok
-(form bekliyor), ses payı ondan türetilir | beklenen aralık: 3–6 MB`.
+**Toplam ses MB tavanı: 6 MB.** Kaynak: **bütçe kararı — üst sınır**; ölçüm değil.
+Ölçülmüş karşılığı Aşama 6'da artefaktla gelir (S1 kapısı: FFmpeg `ebur128` çıktısı
+manifest satırına yazılır). Gerekçe: uygulama boyut tavanı Ek C'de henüz yok (form
+bekliyor); tavan gelince ses payı ondan **türetilir** ve bu sayı aşağı revize edilebilir.
+Ölçülen APK gövdesi şu an 29,16 MB — 6 MB'lık ses payı bu gövdenin %20'sinin altındadır.
 **Sessizde oynama notu (F5):** kritik geri bildirimlerin hiçbiri yalnız sese bağlanmaz —
 her biri `premium-manifest.json` `eylemler` listesinde görsel karşılığıyla eşleşir.
 
@@ -174,14 +205,26 @@ Ham Pos X/Y tek cihazdan yazılmaz — güvenli alan + en-boy matrisi formülü 
 
 ## B8 — Denge doğrulayıcısı
 
-`tools/denge_sim.py` **bu koşuda teslim edilmedi** (mimar beyanı: standart atfı vardı,
-araç yazılmamıştı; v1.4.10'da gelecek). Yapı sabittir ve geldiğinde şunu taşıyacak:
-(i) ürünü etkileyen sabitler dosyanın en üstünde tek yerde; (ii) çekirdek kuralı
-modelleyen minimal fonksiyon (`TezgahRules` ile aynı biçim); (iii) ≥3 alternatif değerin
-yan-yana karşılaştırması; (iv) açık eşikli PASS/FAIL + bu belgeye atıf.
+**Araç:** `denge_sim.py` **v1.4.12**, model `tezgah-v1`. Araç **fabrikada durur**
+(FactoryGames `tools/`), oyun reposuna kopyalanmaz — tek kaynak orasıdır.
 
-**Bu bölüm SIM-BEKLIYOR'dur ve Aşama 2 kapanış kapısını (TBD=0) açık tutan tek maddedir.**
-Değişim kontrolü: sabit değişirse sim yeniden koşar; sayının hangi bantta kalması
+Yapı dört şartı da karşılıyor:
+
+| şart | karşılığı |
+|---|---|
+| (i) ürünü etkileyen sabitler tek yerde, en üstte | `MODEL`, `TUR_SANIYE=30`, `ARA_SANIYE=20`, `VARSAYILAN{tabela_p, jitter}` dosyanın başında |
+| (ii) çekirdek kuralı modelleyen minimal fonksiyon | `kostur()` — `satis = min(talep, stok, raf × raf_basi)`; `TezgahRules.Karsilanan` ile **aynı biçim** |
+| (iii) ≥3 alternatif değerin yan-yana karşılaştırması | **4 500 kombinasyon** tarandı; 734'ü her iki hedef bandına oturdu; seçilen aday band **merkezine** en yakın olandır (uçlarda değil) |
+| (iv) açık eşikli PASS/FAIL + GDD'ye atıf | eşikler: başarısızlık %35–60, oturum 360–600 sn. Seçilen config **ikisinde de PASS**; rapor `docs/verification/02-denge-sim.json`, bu belgeden B3 ile atıflı |
+
+**Yeniden üretilebilirlik:** aynı config + aynı tohum → **aynı JSON** (sha256 eşitliğiyle
+doğrulandı). Kararlılık: tohum 7 ile yön değişmedi (başarısızlık 0,5088 · oturum 491,5 sn
+— ikisi de bandda).
+
+**VERİ-YOK sessiz geçmez:** araç, config'te null hücre bulursa `exit 2` + eksik alan
+listesi verir. Bu koşuda çıkış **0**.
+
+**Değişim kontrolü:** sabit değişirse sim yeniden koşar; sayının hangi bantta kalması
 gerektiği B3'te yazılıdır; kapı Aşama 7 CI listesinde ve Aşama 9 gönderim öncesinde
 tekrar koşar.
 
@@ -251,11 +294,11 @@ Taksonomi: FactoryGames `docs/factory/standartlar/05-pre-mortem-taksonomisi.md`.
 | 2 | T1 | Tahsis kararı hissedilmiyor; oyuncu rafı doldurup bekliyor | `musteri_geri_cevrildi` oranı ≈ 0 | Aşama 8 rubriği eksen 1–2 | **açık** — B3 hedef aralığı (%35–60) önlem |
 | 3 | T3 | Ödüllü tabela kısıt ruhunu deliyor; oyuncu ödülle stok kazandığını sanıyor | `tabela_kullanildi` sonrası stok beklentisi şikâyeti | R1/R4 (red-flag) | **kapatıldı** — K3 "STOK VERİLMEZ" B5'te ve `TezgahRules.TabelaliTalep` imzasında (stok parametresi **yok**) |
 | 4 | T4 | İzometrik derinlik sıralaması bozuluyor; kübler yanlış sırada çiziliyor | sprite z-fighting, tente gövdenin altında | CI PlayMode + kod-standardi §9 | **açık** — Aşama 4 iş kalemi 5 |
-| 5 | T6 | B3 sayıları sim yerine "makul görünen" tahminle doluyor | GDD'de gerekçesiz sayı | B8 kaynak denetimi (gerekçesiz tahmin = kırmızı) | **kapatıldı** — SIM-BEKLIYOR deseni tek biçimde; boş hücre yok |
+| 5 | T6 | B3 sayıları sim yerine "makul görünen" tahminle doluyor | GDD'de gerekçesiz sayı | B8 kaynak denetimi (gerekçesiz tahmin = kırmızı) | **kapatıldı** — 12 hücrenin 9'u `denge_sim` çıktısı/girdisi, 1'i kilitli karar, 1'i gerekçeli "simüle edilemez", 1'i B5 kararı; gerekçesiz sayı **0** |
 | 6 | T5 | `factory.core` etiketi veya Unity pini kayıyor; iskelet yeniden kurulamıyor | PRESET-SAPMA kırmızı, paket çözümlenmiyor | CI lint + `standartlar/FALLBACK.md` | **kapatıldı** — `#v0.1.8` pinli, preset 39/39 birebir ölçüldü |
 | 7 | T3 | İlk gün reklam yasağı kodda değil yalnız planda kalıyor | ilk oturumda teklif gösterimi > 0 | R1 + iş kalemi 7 kabul kriteri | **açık** — Aşama 4'te telemetriyle doğrulanacak |
 | 8 | T8 | Ek C form dönüşü gecikiyor; BOYUT ve ses bütçesi ölçülemiyor | BOYUT kapısı VERİ-YOK kalıyor | `insan-yuku.md` + Ek C `insan_yanit_tavan_*` | **kabul edilmiş risk** — gerekçe: kapı RAPOR modunda ölçüp kaydediyor, kırmıyor; kural 28 gereği uydurma eşik yazılamaz |
-| 9 | T6 | Renk-yalnız-bilgi ihlali; `tehlike` yalnız renkle anlatılıyor | G6 kırmızı veya CVD şikâyeti | `lint_varlik.py` G6 | **açık** — döteranopi oranı **şu an kırmızı** (§Açık kapılar); biçim eşliği önlem olarak zaten sabit |
+| 9 | T6 | Renk-yalnız-bilgi ihlali; `tehlike` yalnız renkle anlatılıyor | G6 kırmızı veya CVD şikâyeti | `lint_varlik.py` G6 | **kapatıldı** — kapı gerçekten kırmızı yandı (döteranopi 2,88), renk `#A82E1A`'ya koyulaştı → 3,29. Eşik gevşetilmedi; biçim eşliği oranın **üstüne** ek önlem |
 | 10 | T7 | İkinci oyun aynı aileyi kullanınca görsel tekrar hissi | defter ekseni farkı yetersiz | `appendix/A.md` + R6 | **kabul edilmiş risk** — gerekçe: Ek A aile başına ≤2 canlı oyuna zaten izin veriyor; paket yeniden kullanımı maliyet kararıdır, ikinci oyunda eksen farkı kart düzeyinde aranacak |
 
 **Tekrar taraması (zorunlu yazılı sonuç):** **önceki kayıt yok — bu defterin ilk
@@ -270,19 +313,32 @@ yükseltmesine gider; sayaç bu koşuyla **1**'den başlar (kabul edilenler: T8,
 |---|---|
 | Kapılar | `lint.py` + `lint_varlik.py` + `events_parity.py` **kırmızı 0**; VERİ-YOK satırları artefakt kanıtlı |
 | Testler | `dotnet test` yeşil; Unity EditMode + PlayMode yerelde yeşil |
-| B3 | SIM-BEKLIYOR hücresi **0**, her sayı `denge_sim.py` çıktısına atıflı |
+| B3 | SIM-BEKLIYOR hücresi **0**, her sayı `denge_sim.py` çıktısına veya gerekçeli "simüle edilemez" satırına atıflı |
 | B1–B8 | eksiksiz ve çapraz tutarlı; TBD **0** |
 | Çözünürlük | 3 matris hücresinde 7 ekranın hepsi taşmadan çizilir |
 | Yerelleştirme | en + tr tam; runtime kodunda kullanıcı metni 0 |
 | Yapı | Android arm64 APK + iOS xcodeproj yerelde üretilir; iOS derleme kanıtı CI'da yeşil |
 | Boyut | Ek C `uygulama_boyut_tavan_mb` gelince BOYUT kapısı yeşil; gelene kadar ölçülür ve kaydedilir |
 
-## Açık kapılar (kapanış bunları bekliyor)
+## Kapı durumu
 
-1. **B8 / `denge_sim.py` teslim edilmedi** → B3'ün 11 hücresi SIM-BEKLIYOR. Aşama 2
-   kapanış kapısı (TBD=0) bu yüzden **beklemede**. Boşluğu executor doldurmaz (mimar kararı).
-2. ~~G6 döteranopi oranı kırmızı~~ — **KAPANDI (v1.4.10).** `tehlike` `#B4341F` → `#A82E1A`;
-   eşik değişmedi, renk koyulaştırıldı. Döteranopi 2,88 → **3,29**. Biçim eşliği (üçgen)
-   oranın yerine geçmez, üstüne çıkar. Kanon: `duz-geometrik.md` v1.4.10.
-3. **Ek C `uygulama_boyut_tavan_mb` yok** → BOYUT kapısı RAPOR modunda: ölçer, kaydeder,
-   **kırmaz** (kural 28: Ek C'de olmayan sayı kapıda kullanılamaz).
+| # | madde | durum |
+|---|---|---|
+| 1 | ~~B8 / `denge_sim.py` teslim edilmedi~~ | **KAPANDI (v1.4.12).** Araç fabrikada; B3'te SIM-BEKLIYOR hücresi **0**. 4 500 kombinasyon tarandı, seçilen config iki hedef bandında da PASS, iki tohumda kararlı, çıktı deterministik |
+| 2 | ~~G6 döteranopi oranı kırmızı~~ | **KAPANDI (v1.4.10).** `tehlike` `#B4341F` → `#A82E1A`; eşik değişmedi, renk koyulaştırıldı: 2,88 → **3,29**. Türevler (×0,86 / ×0,72 / ×0,60) da geçiyor |
+| 3 | ~~PRESET-SAPMA (platform sonrası)~~ | **KAPANDI (v1.4.10 madde 2-i).** Baseline "platform-sonrası ilk durum"a taşındı; kapsam daraltılmadı (39/39), meşru alanlar + şema-tamamlama diff'i `docs/verification/01-preset-baseline.md`'de damgalı |
+| 4 | **Ek C `uygulama_boyut_tavan_mb` yok** | **AÇIK — kabul edilmiş risk.** BOYUT kapısı RAPOR modunda: ölçer (APK 29,16 MB), kaydeder, **kırmaz** (kural 28: Ek C'de olmayan sayı kapıda kullanılamaz). Form dönünce kapı yeşile bağlanır |
+
+Madde 4 Aşama 2'yi bloke etmez: kural 28 gereği uydurma eşik yazılamaz ve kapı
+sessizce geçmiyor — ölçümü artefaktıyla raporluyor.
+
+## MCP / AI paket kararı (kayıt)
+
+`com.unity.ai.assistant` bu projeye **kalıcı olarak eklenmez** (mimar kararı v1.4.12).
+Bilinçli sınama koşuldu ve köprünün **tetiklendiği kanıtlandı** (EditorPrefs'e
+`Unity.AI.MCP.ProjectSettings` yazıldı; `Unity.AI.MCP.Runtime.dll` + `Unity.AI.MCP.Editor.dll`
+derlendi). Gerekçe: 0A-9'un "projeye gereksiz AI yüzeyi taşınmaz" kararı + sınamada
+görülen duplicate-assembly riski (`System.Runtime.CompilerServices.Unsafe.dll`).
+Sınama sonrası paket geri çıkarıldı; `Packages/manifest.json` net değişiklik **sıfır**.
+**Kural 30 uyumu:** hiçbir üçüncü taraf köprüye bağlanılmadı; sınama log'unda
+`MCPForUnity` / `McpUnity` eşleşmesi **0**. Ayrıntı: `docs/verification/03-mcp-sinama.md`.

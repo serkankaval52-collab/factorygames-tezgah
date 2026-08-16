@@ -1,20 +1,20 @@
 {
-  "_aciklama": "Oyunun ayarlanabilir TUM degerleri burada yasar (Sozlesme-2 tek kaynagi). ScriptableObject/.asset YASAK (kod-standardi 4. bolum). Denge sayilari SIM-BEKLIYOR: tools/denge_sim.py teslim edilince docs/plan.md B3 ile birlikte dolar; degisim Sozlesme-5 adayidir.",
+  "_aciklama": "Oyunun ayarlanabilir TUM degerleri burada yasar (Sozlesme-2 tek kaynagi). ScriptableObject/.asset YASAK (kod-standardi 4. bolum). Denge alanlari KOK seviyededir cunku tools/denge_sim.py bu semayi okur; sim girdisi ile oyun config'i AYNI dosyadir, ikinci bir kopya yoktur.",
+  "_denge_kaynagi": "denge_sim v1.4.12 (model tezgah-v1), rapor docs/verification/02-denge-sim.json, tohum=42, seeds=200. Sabit degisirse sim YENIDEN kosar (B8 degisim kontrolu).",
   "surum": 1,
+
   "oyun": {
     "hedef_kare_hizi": 60,
     "tur_sure_sn": 30
   },
-  "denge": {
-    "_durum": "SIM-BEKLIYOR — asagidaki alanlar denge_sim.py ciktisiyla dolar; su an DEGER YOK (null), tahmin yazilmaz (B8: gerekcesiz tahmin = kirmizi).",
-    "sezon_gun_sayisi": null,
-    "baslangic_stok_adet": null,
-    "gun_taban_talep": null,
-    "talep_artis_yuzde": null,
-    "raf_kapasitesi_baslangic": null,
-    "raf_kapasitesi_tavan": null,
-    "tabela_carpani": null
-  },
+
+  "sezon_gun_sayisi": 12,
+  "baslangic_stok_adet": 150,
+  "gun_taban_talep": 10,
+  "talep_artis_yuzde": 10,
+  "raf_kapasitesi": 3,
+  "tabela_carpani": 1.5,
+
   "reklam": {
     "siklik_tavan": 3,
     "arasi_min_sn": 90,

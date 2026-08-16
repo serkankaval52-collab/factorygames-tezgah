@@ -1,0 +1,50 @@
+{
+  "model": "tezgah-v1",
+  "seeds": 200,
+  "tohum": 42,
+  "parametreler": {
+    "sezon_gun_sayisi": 12,
+    "baslangic_stok_adet": 150,
+    "gun_taban_talep": 10.0,
+    "talep_artis_yuzde": 10.0,
+    "raf_kapasitesi": 3,
+    "raf_basi_kapasite": 6.0,
+    "tabela_carpani": 1.5,
+    "tabela_p": 0.5,
+    "jitter": 0.15,
+    "tur_saniye": 30.0,
+    "ara_saniye": 20.0
+  },
+  "metrikler": {
+    "tamamlanma_orani": {
+      "orta": 0.0,
+      "p10": 0,
+      "p50": 0,
+      "p90": 0
+    },
+    "oynanan_gun": {
+      "orta": 9.84,
+      "p10": 9,
+      "p50": 10,
+      "p90": 10
+    },
+    "gun_basarisizlik_orani": {
+      "orta": 0.5004,
+      "p10": 0.3636,
+      "p50": 0.5,
+      "p90": 0.6
+    },
+    "oturum_suresi_sn": {
+      "orta": 492.0,
+      "p10": 450.0,
+      "p50": 500.0,
+      "p90": 500.0
+    },
+    "toplam_satis": {
+      "orta": 150.0,
+      "p10": 150.0,
+      "p50": 150.0,
+      "p90": 150.0
+    }
+  }
+}
